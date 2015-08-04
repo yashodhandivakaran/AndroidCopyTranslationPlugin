@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">2CloudMagic</string>
+    <string name="onboarding_screen_header">2Add your email account</string>
+    <string name="home_screen_login_button">2Already using CloudMagic? Log In</string>
+</resources>
