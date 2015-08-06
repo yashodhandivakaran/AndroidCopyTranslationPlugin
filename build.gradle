@@ -35,7 +35,7 @@ dependencies {
     compile localGroovy()
 }
 
-task sourcesJar(type: Jar) {
+/*task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
 }
@@ -56,4 +56,12 @@ publishing {
             url "file:/${project.projectDir}/artifacts"
         }
     }
+}*/
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../AndroidCopyTranslationPlugin'))
+        }
+    }
 }
+
