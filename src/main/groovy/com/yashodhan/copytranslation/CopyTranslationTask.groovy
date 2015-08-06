@@ -85,7 +85,10 @@ class CopyTranslationTask extends DefaultTask {
     void deleteDublicateString(Node destNode,Node string) {
 
         def duplicateStringNode = destNode.depthFirst().find {
-            dupString -> dupString.@name == string.@name
+            dupString ->
+                if (dupString instanceof Node) {
+                     dupString.@name == string.@name
+                }
         }
 
         if(duplicateStringNode != null){
