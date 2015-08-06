@@ -11,7 +11,7 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
   dependencies {
-    classpath "gradle.plugin.com.yashodhan:AndroidCopyString:1.9"
+    classpath "gradle.plugin.com.yashodhan:AndroidCopyTranslationPlugin:1.9"
   }
 }
 
