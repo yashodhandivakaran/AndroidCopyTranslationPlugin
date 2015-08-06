@@ -26,8 +26,6 @@ class CopyTranslationPlugin implements Plugin<Project> {
                 destPath = project.projectDir.absoluteFile.toString() + "/res"
                 destFileName = "strings.xml"
 
-                println("basepath " + extension.basePath)
-
                 sourcePath = extension.basePath
                 sourceFileName = extension.sourceFileName
             }

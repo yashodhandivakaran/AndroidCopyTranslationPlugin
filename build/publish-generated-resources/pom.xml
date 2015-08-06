@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <groupId>gradle.plugin.com.yashodhan</groupId>
   <artifactId>AndroidCopyTranslationPlugin</artifactId>
-  <version>1.7</version>
+  <version>1.8</version>
   <dependencies>
     <dependency>
       <groupId>org.codehaus.groovy</groupId>

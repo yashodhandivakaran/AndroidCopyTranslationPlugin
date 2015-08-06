@@ -21,44 +21,86 @@ class CopyTranslationTask extends DefaultTask {
     String destFileName = "strings.xml"
 
     String[] values = [
-          "values"
-        , "values-de"
-        , "values-es"
-        , "values-fr"
-        , "values-nl"
-        , "values-pt"
-        , "values-ru"
-        , "values-th"
-        , "values-zh-rCN"
-        , "values-zh-rTW"
+            "values"
+            , "values-de"
+            , "values-es"
+            , "values-fr"
+            , "values-nl"
+            , "values-pt"
+            , "values-ru"
+            , "values-th"
+            , "values-zh-rCN"
+            , "values-zh-rTW"
+            , "values-af"
+            , "values-am"
+            , "values-ar"
+            , "values-be"
+            , "values-bg"
+            , "values-ca"
+            , "values-cs"
+            , "values-da"
+            , "values-el"
+            , "values-en-rGB"
+            , "values-en-rIN"
+            , "values-es-rUS"
+            , "values-et-rEE"
+            , "values-et"
+            , "values-fa"
+            , "values-fi"
+            , "values-fr-rCA"
+            , "values-hi"
+            , "values-hr"
+            , "values-hu"
+            , "values-hy-rAM"
+            , "values-in"
+            , "values-it"
+            , "values-iw"
+            , "values-ja"
+            , "values-ka-rGE"
+            , "values-km-rKH"
+            , "values-ko"
+            , "values-lo-rLA"
+            , "values-lt"
+            , "values-lv"
+            , "values-mn-rMN"
+            , "values-ms-rMY"
+            , "values-ms"
+            , "values-nb"
+            , "values-pl"
+            , "values-pt-rBR"
+            , "values-pt-rPT"
+            , "values-ro"
+            , "values-sk"
+            , "values-sl"
+            , "values-sr"
+            , "values-sv"
+            , "values-sw"
+            , "values-tl"
+            , "values-tr"
+            , "values-uk"
+            , "values-vi"
+            , "values-zh-rHK"
+            , "values-zu"
     ]
-
-
-    String string = "values"
-    String string_de = "values-de"
-    String string_es = "values-es"
-    String string_fr = "values-fr"
-    String string_nl = "values-nl"
-    String string_pt = "values-pt"
-    String string_ru = "values-ru"
-    String string_th = "values-th"
-    String string_zh_rCN = "values-zh-rCN"
-    String string_zh_rTW = "values-zh-rTW"
 
 
     @TaskAction
     void performTask(){
-        println(sourcePath+" : "+destPath)
+
+        if(sourcePath == null || sourcePath.isEmpty()){
+            throw new IllegalStateException("baseBath is empty. Please specify basePath in your build script eg. translation.basePath = 'pathToValues' ")
+        }
 
         values.each {
             value ->
                 def source = sourcePath + "/" + value + "/" + sourceFileName
                 def destination = destPath + "/" + value + "/" + destFileName
 
-                copy(source, destination)
-                println("Copied ${value}/${sourceFileName}")
+                if (copy(source, destination)) {
+                    println("Copied ${value}/${sourceFileName}")
+                }
         }
-        println("Copiead all translated strings.")
+        println("CopyTanslation task completed.")
     }
 
     /**
@@ -66,15 +108,25 @@ class CopyTranslationTask extends DefaultTask {
      * @param sorucePath
      * @param destinationPath
      */
-    void copy(String sorucePath, String destinationPath) {
+    boolean copy(String sorucePath, String destinationPath) {
 
         Path xmlSrcFilePath = Paths
                 .get(sorucePath)
                 .toAbsolutePath()
+        if(!xmlSrcFilePath.toFile().exists()){
+            println("Resource not present: "+xmlSrcFilePath.toAbsolutePath())
+            return false
+        }
+
 
         Path xmlDestFilePath = Paths
                 .get(destinationPath)
                 .toAbsolutePath()
+
+        if(!xmlDestFilePath.toFile().exists()){
+            println("Project does not contain: "+xmlDestFilePath.toAbsolutePath())
+            return false
+        }
 
         def sourceRes = new XmlParser().parse(xmlSrcFilePath.toFile())
         def destinationRes = new XmlParser().parse(xmlDestFilePath.toFile())
@@ -85,6 +137,7 @@ class CopyTranslationTask extends DefaultTask {
         }
 
         new XmlNodePrinter(new PrintWriter(new FileWriter(destinationPath))).print(destinationRes)
+        return true
     }
 
     /**

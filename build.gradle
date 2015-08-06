@@ -14,7 +14,7 @@ apply plugin: 'maven-publish'
 apply plugin: "com.gradle.plugin-publish"
 
 group = 'com.yashodhan'
-version = '1.7'
+version = '1.8'
 
 buildscript {
     repositories {
