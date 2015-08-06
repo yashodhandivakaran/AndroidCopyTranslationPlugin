@@ -11,9 +11,21 @@
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
+apply plugin: "com.gradle.plugin-publish"
 
 group = 'com.yashodhan'
 version = '1.0'
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.1"
+    }
+}
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -35,6 +47,7 @@ dependencies {
     compile localGroovy()
 }
 
+/*
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
@@ -54,6 +67,23 @@ publishing {
     repositories {
         maven {
             url "file:/${project.projectDir}/artifacts"
+        }
+    }
+}
+*/
+
+// The configuration example below shows the minimum required properties
+// configured to publish your plugin to the plugin portal
+pluginBundle {
+    website = 'http://www.gradle.org/'
+    vcsUrl = 'https://github.com/gradle/gradle'
+    description = 'Copy string translation from translated file to respective strings.xml of android project'
+    tags = ['String Translation', 'Android String resource']
+
+    plugins {
+        CopyTranslationPlugin {
+            id = 'com.yashodhan.copytranslation'
+            displayName = 'Gradle plugin to copy string translation to your android project'
         }
     }
 }
